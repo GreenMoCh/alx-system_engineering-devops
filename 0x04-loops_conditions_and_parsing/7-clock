@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script is displaying time
+
+hour=0
+if [
+while [ $hour -le 12 ]; do
