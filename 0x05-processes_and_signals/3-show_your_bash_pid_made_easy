@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script is displaying the PID
+
+while read -r pid; do
+	process_name=$(ps -p "$pid" -o comm=)
+	if [[ "$process_name" == *bash* ]]; then
+		echo "$pid $process_name"
+	fi
+done < <(pgrep -f bash)
