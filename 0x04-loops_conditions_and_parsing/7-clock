@@ -2,5 +2,13 @@
 # This script is displaying time
 
 hour=0
-if [
+
 while [ $hour -le 12 ]; do
+	echo "Hour: $hour"
+	minute=1
+	while [ $minute -le 59 ]; do
+		echo "$minute"
+		(( minute++ ))
+	done
+	(( hour++ ))
+done
