@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# TCP and UDP ports
+
+echo "Active Internet connections (only servers)"
+echo "Porto Recv-Q Send-Q Local Address		Foreign Address		State	 PID/Program name"
