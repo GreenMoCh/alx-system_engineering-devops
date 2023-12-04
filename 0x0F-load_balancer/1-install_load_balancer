@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Install your load balancer
+
+# Update APT packages
+sudo apt-get update
+
+# Install HAProxy
+sudo apt-get -y install haproxy
+
+# Get the IP adresses of web-01 & web-02
+web_01_ip="54.157.168.41"
+web_02_ip="54.242.203.200"
+
+# Configure HAProxy
+server_config=\
+"
+frontend http_front
+	bind *:80
+	mode http
+	default_backend http_back
+backend http_back
+	balance roundrobin
+	server web-01 $web_01_ip:80 check
+	server web-02 $web_02_ip:80 check
+"
+
+# Enable HAProxy to be managed via init script
+sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
+
+# Restart HAProxy
+sudo service haproxy restart
