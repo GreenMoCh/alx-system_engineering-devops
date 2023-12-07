@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Nginx likes port 80
+
+# Check if Nginx is already running
+if systemctl is-active --quiet nginx; then
+	echo "Nginx is already running"
+else
+	systemctl start nginx
+	echo "Nginx started"
+fi
+
+# Get the active IPv4 IPs
+ip_adresses=$(ip -4 adr | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | tr '\n' ' ')
+
+# Check if Nginx is listening on port 80 for each IP
+for ip in $ip_adresses; do
+	if ! ss -tln | grep -q ":80\s\+$ip"; then
+		sed -i "/listen\s\+[0-9]\+;/a\	listen $ip:80;" /etc/nginx/sites-available/default
+	fi
+done
