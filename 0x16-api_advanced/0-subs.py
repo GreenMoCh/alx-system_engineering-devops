@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """How many subs?"""
-
 import requests
 
 
@@ -12,9 +11,7 @@ def number_of_subscribers(subreddit):
 
     if response.status_code == 200:
         data = response.json()
-        subs_count = data['data']['subscribers']
+        subs_count = data['{}']['{}'].format(data, subscribers) 
         return subs_count
     elif response.status_code == 404:
-        return 0
-    else:
         return 0
